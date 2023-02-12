@@ -43,3 +43,24 @@ export const useDebounce = <T>(value: T, delay?: number) => {
 
   return debouncedValue;
 };
+
+export const useArray = <T>(value: T[]) => {
+  // hello，请把作业写在这里吧，写完记得再对照作业要求检查一下
+  const [array, setArray] = useState(value);
+
+  const clear = (): void => {
+    setArray([]);
+  };
+
+  const removeIndex = (index: number): void => {
+    const newArr = [...array];
+    newArr.splice(index, 1);
+    setArray(newArr);
+  };
+
+  const add = (person: T): void => {
+    setArray([...array, person]);
+  };
+
+  return { value: array, clear, add, removeIndex };
+};
