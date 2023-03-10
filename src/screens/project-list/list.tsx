@@ -1,4 +1,5 @@
-import { User } from "./search-panel";
+import React from "react";
+import { User } from "screens/project-list/search-panel";
 
 interface Project {
   id: string;
@@ -9,11 +10,11 @@ interface Project {
 }
 
 interface ListProps {
-  users: User[];
   list: Project[];
+  users: User[];
 }
 
-export const List = ({ users, list }: ListProps) => {
+export const List = ({ list, users }: ListProps) => {
   return (
     <table>
       <thead>
@@ -26,6 +27,7 @@ export const List = ({ users, list }: ListProps) => {
         {list.map((project) => (
           <tr key={project.id}>
             <td>{project.name}</td>
+            {/*undefined.name*/}
             <td>
               {users.find((user) => user.id === project.personId)?.name ||
                 "未知"}

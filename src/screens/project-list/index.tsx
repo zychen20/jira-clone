@@ -1,19 +1,23 @@
-import { SearchPanel } from "./search-panel";
-import { List } from "./list";
+import React from "react";
+import { SearchPanel } from "screens/project-list/search-panel";
+import { List } from "screens/project-list/list";
 import { useEffect, useState } from "react";
-import { cleanObject, useDebounce, useMount } from "utils";
-import qs from "qs";
+import { cleanObject, useDebounce, useMount } from "../../utils";
+import * as qs from "qs";
 
+// 使用 JS 的同学，大部分的错误都是在 runtime(运行时) 的时候发现的
+// 我们希望，在静态代码中，就能找到其中的一些错误 -> 强类型
 const apiUrl = process.env.REACT_APP_API_URL;
+
 export const ProjectListScreen = () => {
+  const [users, setUsers] = useState([]);
+
   const [param, setParam] = useState({
     name: "",
     personId: "",
   });
+  const debouncedParam = useDebounce(param, 200);
   const [list, setList] = useState([]);
-  const [users, setUsers] = useState([]);
-
-  const debouncedParam = useDebounce(param, 500);
 
   useEffect(() => {
     fetch(
@@ -35,12 +39,8 @@ export const ProjectListScreen = () => {
 
   return (
     <div>
-      <SearchPanel
-        users={users}
-        param={param}
-        setParam={setParam}
-      ></SearchPanel>
-      <List users={users} list={list}></List>
+      <SearchPanel users={users} param={param} setParam={setParam} />
+      <List users={users} list={list} />
     </div>
   );
 };
