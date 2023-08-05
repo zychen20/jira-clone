@@ -2,5 +2,5 @@
 
 ## Development Environment
 
-- node @ 16.91.1
+- node @ 16.9.1 (`.nvmrc` is prepared, run `nvm use` before development)
 - yarn
