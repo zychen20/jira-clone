@@ -2,7 +2,12 @@ import React from "react";
 import { SearchPanel } from "screens/project-list/search-panel";
 import { List, Project } from "screens/project-list/list";
 import { useEffect, useState } from "react";
-import { cleanObject, useDebounce, useMount } from "../../utils";
+import {
+  cleanObject,
+  useDebounce,
+  useDocumentTitle,
+  useMount,
+} from "../../utils";
 import * as qs from "qs";
 import { useHttp } from "utils/http";
 import styled from "@emotion/styled";
@@ -21,6 +26,8 @@ export const ProjectListScreen = () => {
   const debouncedParam = useDebounce(param, 200);
   const { isLoading, error, data: list } = useProjects(debouncedParam);
   const { data: users } = useUsers();
+
+  useDocumentTitle("项目列表", false);
 
   return (
     <Container>
