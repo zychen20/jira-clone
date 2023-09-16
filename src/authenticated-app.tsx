@@ -5,37 +5,54 @@ import styled from "@emotion/styled";
 import { Row } from "components/lib";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { ProjectScreen } from "screens/project";
 
 export const AuthenticatedApp = () => {
+  return (
+    <Container>
+      <PageHeader />
+      <Main>
+        <Router>
+          <Routes>
+            <Route path={"/projects"} element={<ProjectListScreen />} />
+            <Route
+              path={"/projects/:projectId/*"}
+              element={<ProjectScreen />}
+            />
+            <Route index element={<ProjectListScreen />} />
+          </Routes>
+        </Router>
+      </Main>
+    </Container>
+  );
+};
+
+const PageHeader = () => {
   const { user, logout } = useAuth();
   return (
-    <div>
-      <Header between={true}>
-        <HeaderLeft gap={true}>
-          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-          <h3>项目</h3>
-          <h3>用户</h3>
-        </HeaderLeft>
-        <HeaderRight>
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item key={"logout"}>
-                  <Button onClick={logout} type="link">
-                    登出
-                  </Button>
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <Button type="link">Hi, {user?.name}</Button>
-          </Dropdown>
-        </HeaderRight>
-      </Header>
-      <Main>
-        <ProjectListScreen />
-      </Main>
-    </div>
+    <Header between={true}>
+      <HeaderLeft gap={true}>
+        <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+        <h3>项目</h3>
+        <h3>用户</h3>
+      </HeaderLeft>
+      <HeaderRight>
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key={"logout"}>
+                <Button onClick={logout} type="link">
+                  登出
+                </Button>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <Button type="link">Hi, {user?.name}</Button>
+        </Dropdown>
+      </HeaderRight>
+    </Header>
   );
 };
 
@@ -52,4 +69,9 @@ const HeaderRight = styled.div``;
 
 const Main = styled.main`
   height: calc(100vh - 6rem);
+`;
+
+const Container = styled.div`
+  display: grid;
+  grid-template-rows: 6rem 1fr;
 `;
