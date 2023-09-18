@@ -18,7 +18,7 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
       // eslint-disable-next-line
       [searchParams]
     ),
-    (params: Partial<{ [keys in K]: string }>) => {
+    (params: Partial<{ [keys in K]: string | number }>) => {
       const o = cleanObject({
         ...Object.fromEntries(searchParams),
         ...params,
