@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
+import { cleanObject } from "utils";
 
 /** 返回 URL 中指定键 `keys` 的参数值 */
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
@@ -17,6 +18,12 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
       // eslint-disable-next-line
       [searchParams]
     ),
-    setSearchParams,
+    (params: Partial<{ [keys in K]: string }>) => {
+      const o = cleanObject({
+        ...Object.fromEntries(searchParams),
+        ...params,
+      }) as URLSearchParamsInit;
+      return setSearchParams(o);
+    },
   ] as const;
 };
